@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Переход в сообщество</title>
+    <!-- Обязательно подключаем Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .card {
+            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
+            border-radius: 16px;
+            padding: 30px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 25px;
+            opacity: 0.8;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .button {
+            display: inline-block;
+            background: var(--tg-theme-button-color, #2481cc);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            border: none;
+            border-radius: 12px;
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        .button:active {
+            transform: scale(0.98);
+        }
+
+        .hint {
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.5;
+        }
+
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .button.loading .loader {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>🚀 Переход в сообщество</h1>
+            <p>Нажми кнопку, чтобы перейти в закрытое сообщество ВКонтакте</p>
+
+            <!-- Кнопка перехода -->
+            <button class="button" id="goButton" onclick="redirectToVK()">
+                <span class="loader"></span>
+                <span class="text">Перейти в ВК</span>
+            </button>
+
+            <p class="hint">После нажатия откроется ВКонтакте</p>
+        </div>
+    </div>
+
+    <script>
+        // Инициализация Telegram WebApp
+        const tg = window.Telegram.WebApp;
+
+        // Разворачиваем на весь экран
+        tg.expand();
+
+        // Цвета подстраиваются под тему Telegram
+        document.body.style.background = tg.themeParams.bg_color || '#ffffff';
+
+        // Основная функция перехода
+        function redirectToVK() {
+            // Меняем кнопку на состояние загрузки
+            const button = document.getElementById('goButton');
+            const buttonText = button.querySelector('.text');
+            const originalText = buttonText.textContent;
+
+            button.classList.add('loading');
+            buttonText.textContent = 'Переходим...';
+            button.disabled = true;
+
+            // ТВОЯ ССЫЛКА ВК - ВСТАВЬ СЮДА!
+            const vkLink = "https://vk.ru/invite/WjvWZxT";
+
+            // Переход на ссылку ВК
+            window.location.href = vkLink;
+
+            // Закрываем веб-вью через 3 секунды (на всякий случай)
+            setTimeout(() => {
+                tg.close();
+            }, 3000);
+        }
+
+        // Автоматический переход (раскомментируй, если нужно)
+        // setTimeout(redirectToVK, 500);
+    </script>
+</body>
+</html>
